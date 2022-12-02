@@ -27,6 +27,7 @@ class CoursesController < ApplicationController
 
   def show
     @course = Course.find(params[:id])
+    @Objective = LearningObjective.all
     @topics = @course.topics
     @blooms = BloomTaxonomyLevel.all
     @q = LearningObjective.ransack(params[:q])

@@ -37,7 +37,6 @@
       <th scope="col">#</th>
       <th scope="col">Description</th>
       <th scope="col">Bloom’s taxonomy level</th>
-      <th scope="col">Category</th>
       <th colspan="2"></th>
     </tr>
     </thead>
@@ -47,7 +46,6 @@
         <td><%= learning_objective.key %></td>
         <td><%= learning_objective.description %></td>
         <td><%= learning_objective.bloom_taxonomy_level.level %></td>
-        <td><%= learning_objective.category %></td>
         <td><%= link_to 'Edit', edit_learning_objective_path(learning_objective) %></td>
         <td><%= link_to 'Delete', learning_objective, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
@@ -70,33 +68,33 @@
     <tbody>
     <tr>
       <td>
-        <% @learning_objectives.remember.each do |remember| %>
+        <% @Objective.remember.each do |remember| %>
           <%= remember.key %>
         <% end %>
       </td>
 
       <td>
-        <% @learning_objectives.understand.each do |understand| %>
+        <% @Objective.understand.each do |understand| %>
           <%= understand.key %>
         <% end %>
       </td>
       <td>
-        <% @learning_objectives.apply.each do |apply| %>
+        <% @Objective.apply.each do |apply| %>
           <%= apply.key %>
         <% end %>
       </td>
       <td>
-        <% @learning_objectives.analyze.each do |analyze| %>
+        <% @Objective.analyze.each do |analyze| %>
           <%= analyze.key %>
         <% end %>
       </td>
       <td>
-        <% @learning_objectives.evaluate.each do |evaluate| %>
+        <% @Objective.evaluate.each do |evaluate| %>
           <%= evaluate.key %>
         <% end %>
       </td>
       <td>
-        <% @learning_objectives.creat.each do |creat| %>
+        <% @Objective.creat.each do |creat| %>
           "#{<%= creat.key %>}"
         <% end %>
       </td>
