@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
 
   resources :courses, only: [:index, :new, :create, :show]
-  resources :topics, only: [:new, :create]
+  resources :topics, only: [:new, :create, :destroy, :edit, :update]
   resources :learning_objectives, only: [:new, :create, :edit, :update, :destroy]
   resources :bloom_taxonomy_verbs
 end

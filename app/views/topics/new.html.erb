@@ -6,20 +6,21 @@
       <%= f.label :file, "Add Topics with CSV" %>
       <%= f.file_field :file, accept: ".csv" %>
     </div>
-    
+    <%# binding.pry %>
     <div class="field form-group">
-      <%= f.label :description %><br />
+      <%= f.label :description %><br/>
       <%= f.text_field :description, autofocus: true, class: 'form-control' %>
-      <%= f.hidden_field :course_id, value: @course_id %>
+      <%= f.text_field :course_id, :value => @course.id, style: 'opacity: 0' %>
+
     </div>
 
     <div class="field form-group">
-      <%= f.label 'Map Learning Objectives' %><br />
+      <%= f.label 'Map Learning Objectives' %><br/>
       <% @learning_objectives&.each do |learning_objective| %>
         <div class="field">
-          <%= f.check_box "obj_#{learning_objective.id}" %> 
+          <%= f.check_box "obj_#{learning_objective.id}" %>
           <%= f.label learning_objective.description %>
-          <br />
+          <br/>
         </div>
       <% end %>
     </div>

@@ -10,6 +10,7 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Description</th>
+      <th colspan="2"></th>
     </tr>
     </thead>
     <tbody>
@@ -17,6 +18,8 @@
       <tr>
         <td><%= topic.id %></td>
         <td><%= topic.description %></td>
+        <td><%= link_to 'Edit', edit_topic_path(topic) %></td>
+        <td><%= link_to 'Delete', topic, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
     </tbody>

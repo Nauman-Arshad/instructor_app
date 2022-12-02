@@ -5,7 +5,7 @@ class Topic < ApplicationRecord
   has_many :learning_objective_topics
   has_many :learning_objectives, through: :learning_objectives_topics
   belongs_to :course
-  before_save :set_map_topics
+  before_create :set_map_topics
 
 
   def set_map_topics

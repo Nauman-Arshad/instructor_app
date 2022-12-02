@@ -2,4 +2,5 @@
   <div class="form-group"><%= f.label :category %>
     <%= f.select(:category_eq, options_for_select(LearningObjective.categories.map { |k, v| [k.humanize.capitalize, v] }, f.object.category_eq), { include_blank: true }, { class: "form-control" }) %></div>
   <%= f.submit class: 'btn btn-primary' %>
+  <%= link_to "Clear", request.path, class: "btn btn-outline-dark" %>
 <% end %>
