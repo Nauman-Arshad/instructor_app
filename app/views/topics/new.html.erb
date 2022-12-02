@@ -1,0 +1,31 @@
+<div class='container-fluid'>
+  <h2>Add Topic</h2>
+  <%= form_for :topic, url: topics_path, method: :post do |f| %>
+
+    <div class="form-group">
+      <%= f.label :file, "Add Topics with CSV" %>
+      <%= f.file_field :file, accept: ".csv" %>
+    </div>
+    
+    <div class="field form-group">
+      <%= f.label :description %><br />
+      <%= f.text_field :description, autofocus: true, class: 'form-control' %>
+      <%= f.hidden_field :course_id, value: @course_id %>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label 'Map Learning Objectives' %><br />
+      <% @learning_objectives&.each do |learning_objective| %>
+        <div class="field">
+          <%= f.check_box "obj_#{learning_objective.id}" %> 
+          <%= f.label learning_objective.description %>
+          <br />
+        </div>
+      <% end %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Create", class: 'btn btn-primary mb-2' %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,29 @@
+.taxonomy_img {
+    width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 20px;
+}
+
+.header {
+    text-align: center;
+}
+
+.verb {
+    width: 20%;
+}
+
+.description {
+    width: 78%;
+}
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.italic {
+    font-style: italic;
+}

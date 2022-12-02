@@ -1,0 +1,44 @@
+<div class='container-fluid'>
+  <h2>Create Course</h2>
+  <%= form_for :course, url: courses_path, method: :post do |f| %>
+
+    <div class="field form-group">
+      <%= f.label :name %><br/>
+      <%= f.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control', required: true %>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label :code %><br/>
+      <%= f.text_field :code, class: 'form-control', required: true %>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label :credit_hours %><br/>
+      <%= f.number_field :credit_hours, min: 0, class: 'form-control', required: true %>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label :class_timings %><br/>
+      <%= f.text_field :class_timings, class: 'form-control', required: true %>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label :location %><br/>
+      <%= f.text_field :location, class: 'form-control', required: true %>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label :time %><br/>
+      <%= f.time_field :time, value: "%H:%M", min: 'hh:mm:ss', max: 'hh:mm:ss', class: 'form-control', required: true %>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label 'Instructor' %><br/>
+      <%= f.select :user_id, User.where(id: session.dig(:user, 'id')).map { |user| [user.name, user.id] }, {}, { class: ' form-control' } %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Create", class: 'btn btn-primary mb-2' %>
+    </div>
+  <% end %>
+</div>

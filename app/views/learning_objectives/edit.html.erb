@@ -1,0 +1,23 @@
+<%= stylesheet_link_tag "taxonomy" %>
+<div class='container-fluid'>
+  <h3 class="header">Edit your Learning Objective!</h3>
+  <h6 >We'll be creating learning objectives based on Bloom's taxonomy. Bloom’s taxonomy provides a systematic classification of the learning and thinking process.
+  It classifies knowledge into 6 levels that increase in complexity: remember, understand, apply, analyze, evaluate, create. Refer to the table below for the overview of each knowledge level.
+  </h6>
+  <%= image_tag("bloomlevels.png", class: 'taxonomy_img') %>
+
+  <h5>Now let's edit your Bloom's Taxonomy Level</h5>
+  <%= form_for :bloom_taxonomy_verb, url: edit_bloom_taxonomy_verb_path(@bloom_taxonomy_levels), method: :get do |f| %>
+
+    <div class="field form-group">
+      <%= f.label :bloom_taxonomy_level_id %><br />
+      <%= f.select :bloom_taxonomy_level_id, (@bloom_taxonomy_levels || []).map { |objective| [ objective.level, objective.id] }, {}, { class: ' form-control' } %>
+    </div>
+
+    <%= f.hidden_field :course_id, value: @course_id %>
+
+    <div class="actions">
+      <%= f.submit "Next", class: 'btn btn-primary mb-2' %>
+    </div>
+  <% end %>
+</div>

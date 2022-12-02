@@ -1,0 +1,106 @@
+<div class="jumbotron">
+  <h1 class="display-4 text-center"><%= @course.name %></h1>
+  <h3 class="text-center"><%= @course.code %></h3>
+</div>
+
+<div class='container-fluid'>
+  <%= link_to "Create Topic", new_topic_path(course_id: @course.id), class: 'btn btn-primary' %><br>
+  <table class="table table-striped mt-2">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @topics.each do |topic| %>
+      <tr>
+        <td><%= topic.id %></td>
+        <td><%= topic.description %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<br><br>
+
+<div class='container-fluid'>
+  <%= link_to "Create Learning Objective", new_learning_objective_path(course_id: @course.id), class: 'btn btn-primary' %>
+  <br>
+  <div class="col-3 ml-auto mr-0">
+    <%= render 'filters' %>
+  </div>
+  <table class="table table-striped mt-2">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Description</th>
+      <th scope="col">Bloom’s taxonomy level</th>
+      <th scope="col">Category</th>
+      <th colspan="2"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @learning_objectives.each do |learning_objective| %>
+      <tr>
+        <td><%= learning_objective.key %></td>
+        <td><%= learning_objective.description %></td>
+        <td><%= learning_objective.bloom_taxonomy_level.level %></td>
+        <td><%= learning_objective.category %></td>
+        <td><%= link_to 'Edit', edit_learning_objective_path(learning_objective) %></td>
+        <td><%= link_to 'Delete', learning_objective, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class='container-fluid'>
+  <h2>Mappings</h2>
+  <table class="table table-striped mt-2">
+    <thead>
+    <tr>
+      <% @blooms.each do |bloom| %>
+        <th scope="col"><%= bloom.level %></th>
+      <% end %>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>
+        <% @learning_objectives.remember.each do |remember| %>
+          <%= remember.key %>
+        <% end %>
+      </td>
+
+      <td>
+        <% @learning_objectives.understand.each do |understand| %>
+          <%= understand.key %>
+        <% end %>
+      </td>
+      <td>
+        <% @learning_objectives.apply.each do |apply| %>
+          <%= apply.key %>
+        <% end %>
+      </td>
+      <td>
+        <% @learning_objectives.analyze.each do |analyze| %>
+          <%= analyze.key %>
+        <% end %>
+      </td>
+      <td>
+        <% @learning_objectives.evaluate.each do |evaluate| %>
+          <%= evaluate.key %>
+        <% end %>
+      </td>
+      <td>
+        <% @learning_objectives.creat.each do |creat| %>
+          "#{<%= creat.key %>}"
+        <% end %>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

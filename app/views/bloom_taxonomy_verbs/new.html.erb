@@ -1,0 +1,25 @@
+<div class='container-fluid'>
+  <h3>Step 2: Write or Select a Verb for Your Taxonomy Level (<%= @verb_name %>)</h3>
+  <h5 >Each taxonomy level has action verbs associated with it. Reference the table below to select a verb associated with your knowledge level.</h5>
+  <%= image_tag("bloomverbs.png", class: 'taxonomy_img') %>
+  <%= form_for :bloom_taxonomy_verb, url: bloom_taxonomy_verbs_path, method: :post do |f| %>
+
+    <div class="field form-group">
+      <%= f.label :bloom_taxonomy_verb_id %><br />
+      <input name="bloom_taxonomy_verb[bloom_taxonomy_verb_id]" type="text" list="bloom_taxonomy_verb_list_id" class='form-control' autocomplete="off" >
+      <datalist id="bloom_taxonomy_verb_list_id" >
+        <% @bloom_taxonomy_verbs.each do |verb| %>
+          <option><%= verb.name %></option>
+        <% end %>
+      </datalist>
+      </input>
+    </div>
+
+    <%= f.hidden_field :course_id, value: @course_id %>
+    <%= f.hidden_field :bloom_taxonomy_level_id, value: @bloom_taxonomy_level_id %>
+
+    <div class="actions">
+      <%= f.submit "Next", class: 'btn btn-primary mb-2' %>
+    </div>
+  <% end %>
+</div>
