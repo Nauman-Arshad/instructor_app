@@ -17,7 +17,8 @@
             <h5 class="card-title"><%= link_to course.name, course_path(course.id) %></h5>
             <h6 class="card-subtitle mb-2 text-muted"><%= course.code %></h6>
             <h6 class="card-subtitle mb-2 text-muted"><%= course.user.name %></h6>
-            <h6 class="card-subtitle mb-2 text-muted"><%= course.class_timings %></h6>
+            <h6 class="card-subtitle mb-2 text-muted"><%= "#{course.start_time.strftime("%I:%M%p")}" %></h6>
+            <h6 class="card-subtitle mb-2 text-muted"><%= "#{course.end_time.strftime("%I:%M%p")}" %></h6>
             <h6 class="card-subtitle mb-2 text-muted"><%= course.credit_hours %></h6>
           </div>
         </div>

@@ -18,19 +18,25 @@
     </div>
 
     <div class="field form-group">
-      <%= f.label :class_timings %><br/>
-      <%= f.text_field :class_timings, class: 'form-control', required: true %>
-    </div>
-
-    <div class="field form-group">
       <%= f.label :location %><br/>
       <%= f.text_field :location, class: 'form-control', required: true %>
     </div>
 
+    <h6>Class Timing</h6>
     <div class="field form-group">
-      <%= f.label :time %><br/>
-      <%= f.time_field :time, value: "%H:%M", min: 'hh:mm:ss', max: 'hh:mm:ss', class: 'form-control', required: true %>
+      <label>From</label><br/>
+      <%= f.time_field :start_time, class: 'form-control', required: true %>
     </div>
+    <div class="field form-group">
+      <label>To</label><br/>
+      <%= f.time_field :end_time, class: 'form-control', required: true %>
+    </div>
+    <ul style="list-style: none; display: flex; gap: 10px; margin-left: -30px">
+      <% Date::DAYNAMES.zip((0..6).to_a).each do |day| %>
+        <li><%= check_box_tag 'days[]', day[0], [].include?(day[0]) -%>
+        </li><%= day[0] -%>
+      <% end %>
+    </ul>
 
     <div class="field form-group">
       <%= f.label 'Instructor' %><br/>
@@ -38,6 +44,7 @@
     </div>
 
     <div class="actions">
+      <%= link_to "Back", :back, class: 'btn btn-dark mb-2' %>
       <%= f.submit "Create", class: 'btn btn-primary mb-2' %>
     </div>
   <% end %>

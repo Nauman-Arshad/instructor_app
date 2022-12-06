@@ -16,6 +16,7 @@ class CoursesController < ApplicationController
 
   def create
     course = Course.new(course_params)
+    course.days = params[:days]
     if course.save
       flash[:success] = 'Course Successfully Created!'
       redirect_to courses_path
@@ -30,12 +31,11 @@ class CoursesController < ApplicationController
     @Objective = LearningObjective.all
     @topics = @course.topics
     @blooms = BloomTaxonomyLevel.all
-    @q = LearningObjective.ransack(params[:q])
-    @learning_objectives = @q.result
+    @learning_objectives = LearningObjective.all
   end
 
   def course_params
-    params.require(:course).permit(:name, :code, :credit_hours, :class_timings, :user_id, :time, :location)
+    params.require(:course).permit(:name, :code, :credit_hours, :user_id, :start_time, :end_time, :days, :location)
   end
 
   private

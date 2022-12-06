@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_01_105758) do
+ActiveRecord::Schema.define(version: 2022_12_05_092456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,12 +38,13 @@ ActiveRecord::Schema.define(version: 2022_12_01_105758) do
     t.string "name", null: false
     t.string "code", null: false
     t.integer "credit_hours", null: false
-    t.string "class_timings", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "location"
-    t.datetime "time"
+    t.time "start_time"
+    t.time "end_time"
+    t.text "days", default: [], array: true
   end
 
   create_table "learning_objectives", force: :cascade do |t|
@@ -55,6 +56,7 @@ ActiveRecord::Schema.define(version: 2022_12_01_105758) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "key"
     t.integer "category", default: 0
+    t.string "chosen_verb"
   end
 
   create_table "learning_objectives_topics", force: :cascade do |t|
@@ -69,7 +71,7 @@ ActiveRecord::Schema.define(version: 2022_12_01_105758) do
     t.integer "course_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "map_topics", default: 0
+    t.string "map_topics", default: [], array: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -79,9 +81,10 @@ ActiveRecord::Schema.define(version: 2022_12_01_105758) do
     t.string "password", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.datetime "office_hours_up"
-    t.datetime "office_hours_to"
+    t.time "office_hours_up"
+    t.time "office_hours_to"
     t.string "total_time"
+    t.text "days", default: [], array: true
   end
 
 end

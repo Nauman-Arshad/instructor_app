@@ -5,103 +5,89 @@
 
 <div class='container-fluid'>
   <%= link_to "Create Topic", new_topic_path(course_id: @course.id), class: 'btn btn-primary' %><br>
-  <table class="table table-striped mt-2">
-    <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Description</th>
-      <th colspan="2"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @topics.each do |topic| %>
+  <% unless @topics.any? == false %>
+    <table class="table table-striped mt-2">
+      <thead>
       <tr>
-        <td><%= topic.id %></td>
-        <td><%= topic.description %></td>
-        <td><%= link_to 'Edit', edit_topic_path(topic) %></td>
-        <td><%= link_to 'Delete', topic, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th scope="col">Description</th>
+        <th scope="col">Number of LO's mapped</th>
+        <th colspan="2"></th>
       </tr>
-    <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+      <% @topics.each do |topic| %>
+        <tr>
+          <td><%= topic.description %></td>
+          <% unless topic.map_topics.nil? %>
+            <td><%= topic.map_topics&.join(', ') %></td>
+          <% else topic.map_topics == [] %>
+            <td style="color: red">no mapping for this topic</td>
+          <% end %>
+          <td style="text-align: right;">
+            <%= link_to 'Edit', edit_topic_path(topic), class: 'btn btn-success' %>
+            <%= link_to 'Delete', topic, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
 </div>
 
 <br><br>
 
 <div class='container-fluid'>
   <%= link_to "Create Learning Objective", new_learning_objective_path(course_id: @course.id), class: 'btn btn-primary' %>
-  <br>
-  <div class="col-3 ml-auto mr-0">
-    <%= render 'filters' %>
-  </div>
-  <table class="table table-striped mt-2">
-    <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Description</th>
-      <th scope="col">Bloom’s taxonomy level</th>
-      <th colspan="2"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @learning_objectives.each do |learning_objective| %>
+  <% unless @learning_objectives.any? == false %>
+    <table class="table table-striped mt-2">
+      <thead>
       <tr>
-        <td><%= learning_objective.key %></td>
-        <td><%= learning_objective.description %></td>
-        <td><%= learning_objective.bloom_taxonomy_level.level %></td>
-        <td><%= link_to 'Edit', edit_learning_objective_path(learning_objective) %></td>
-        <td><%= link_to 'Delete', learning_objective, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th scope="col"></th>
+        <th scope="col">Description</th>
+        <th scope="col">Bloom’s taxonomy level</th>
+        <th scope="col">Category</th>
+        <th colspan="2"></th>
       </tr>
-
-    <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+      <% @learning_objectives.each do |learning_objective| %>
+        <tr>
+          <td><%= learning_objective.key %></td>
+          <td><%= learning_objective.chosen_verb %> <%= learning_objective.description %></td>
+          <td><%= learning_objective.bloom_taxonomy_level.level %></td>
+          <td><%= learning_objective.category %></td>
+          <td style="text-align: right">
+            <%= link_to 'Edit', edit_learning_objective_path(learning_objective), class: 'btn btn-success' %>
+            <%= link_to 'Delete', learning_objective, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
 </div>
-
+<br/>
 <div class='container-fluid'>
   <h2>Mappings</h2>
-  <table class="table table-striped mt-2">
-    <thead>
-    <tr>
-      <% @blooms.each do |bloom| %>
-        <th scope="col"><%= bloom.level %></th>
-      <% end %>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>
-        <% @Objective.remember.each do |remember| %>
-          <%= remember.key %>
+  <% unless @Objective.any? == false %>
+    <table class="table table-striped mt-2">
+      <thead>
+      <tr>
+        <% @blooms.each do |bloom| %>
+          <th scope="col"><%= bloom.level %></th>
         <% end %>
-      </td>
-
-      <td>
-        <% @Objective.understand.each do |understand| %>
-          <%= understand.key %>
-        <% end %>
-      </td>
-      <td>
-        <% @Objective.apply.each do |apply| %>
-          <%= apply.key %>
-        <% end %>
-      </td>
-      <td>
-        <% @Objective.analyze.each do |analyze| %>
-          <%= analyze.key %>
-        <% end %>
-      </td>
-      <td>
-        <% @Objective.evaluate.each do |evaluate| %>
-          <%= evaluate.key %>
-        <% end %>
-      </td>
-      <td>
-        <% @Objective.creat.each do |creat| %>
-          "#{<%= creat.key %>}"
-        <% end %>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><%= @Objective.remember.map { |t| "#{t.key}" }.join(", ") %></td>
+        <td><%= @Objective.understand.map { |t| "#{t.key}" }.join(", ") %></td>
+        <td><%= @Objective.apply.map { |t| "#{t.key}" }.join(", ") %></td>
+        <td><%= @Objective.analyze.map { |t| "#{t.key}" }.join(", ") %></td>
+        <td><%= @Objective.evaluate.map { |t| "#{t.key}" }.join(", ") %></td>
+        <td><%= @Objective.creat.map { |t| "#{t.key}" }.join(", ") %></td>
+      </tr>
+      </tbody>
+    </table>
+  <% end %>
 </div>

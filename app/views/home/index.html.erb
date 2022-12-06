@@ -45,15 +45,20 @@
           <%= f.label :phone_no %><br/>
           <%= f.text_field :phone_no, min: 3, class: 'form-control', required: true %>
         </div>
-
         <div>
           <p>Office Hours</p>
           <div class="field form-group">
-            <%= f.datetime_field :office_hours_up, class: 'form-control', required: true %>
+            <%= f.time_field :office_hours_up, class: 'form-control', required: true %>
           </div>
           <div class="field form-group">
-            <%= f.datetime_field :office_hours_to, class: 'form-control', required: true %>
+            <%= f.time_field :office_hours_to, class: 'form-control', required: true %>
           </div>
+          <ul style="list-style: none; display: flex; gap: 10px; margin-left: -30px">
+            <% Date::DAYNAMES.zip((0..6).to_a).each do |day| %>
+              <li><%= check_box_tag 'days[]', day[0],[].include?(day[0]) -%>
+              </li><%= day[0] -%>
+            <% end %>
+          </ul>
         </div>
 
         <div class="field form-group">

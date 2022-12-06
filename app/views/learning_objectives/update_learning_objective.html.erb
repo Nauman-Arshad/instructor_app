@@ -1,0 +1,46 @@
+<div class='container-fluid'>
+  <h3>Step 3: Let's finish writing up the learning objective!</h3> <br/>
+
+  <h6>You chose the verb "<%= @bloom_taxonomy_verb_name %>". Now write what you want students
+    to <%= @bloom_taxonomy_verb_name %>.<br/><br/>
+    When writing your learning objective, remember:<br/><br/>
+    <ul>
+      <li class='italic'>Learning objective must be specific</li>
+      <li class='italic'>Do not combine two objectives into one</li>
+      <li class='italic'>Do not use understand, know, or comprehend in your learning objective</li>
+    </ul>
+  </h6>
+  <%= form_for :learning_objective, url: :learning_objective, method: :patch do |f| %>
+    <div class="field form-group flex">
+      <%= f.text_field :chosen_verb, value: @bloom_taxonomy_verb_name, class: 'form-control verb', required: true, readonly: true %>
+      <%= f.text_field :description, autofocus: true, placeholder: "write learning objective...", class: 'form-control description', required: true %>
+      <%= f.label :chosen_verb, class: 'verb' %>
+      <%= f.label :description, class: 'description' %>
+      <%= f.label :category %>
+      <%= f.select :category, options_for_select(LearningObjective.categories.keys.map { |key| [key.titlecase, key] }), {}, { class: "form-control" } %>
+    </div>
+
+    <h3>Step 4: Map the learning objective to course topics (Optional)</h3><br/>
+    <div class="field form-group">
+      <%= f.label 'Select topics to map' %><br/><br/>
+      <div class="flex">
+        <% @topics&.each do |topic| %>
+          <div class="field">
+            <%= check_box_tag 'topic[]', topic.id %>
+            <%= f.label topic.description %>
+            <br/>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <%= f.hidden_field :course_id, value: @course_id %>
+    <%= f.hidden_field :bloom_taxonomy_level_id, value: @bloom_taxonomy_level_id %>
+    <%= f.hidden_field :bloom_taxonomy_verb_id, value: @bloom_taxonomy_verb_id %>
+
+    <div class="actions">
+      <%= link_to "Back", :back, class: 'btn btn-outline-dark mb-2' %>
+      <%= f.submit "Update", class: 'btn btn-primary mb-2' %>
+    </div>
+  <% end %>
+</div>

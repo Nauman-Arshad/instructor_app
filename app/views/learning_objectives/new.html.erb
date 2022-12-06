@@ -1,8 +1,10 @@
 <%= stylesheet_link_tag "taxonomy" %>
 <div class='container-fluid'>
   <h3 class="header">Welcome to the Learning Objectives Builder!</h3>
-  <h6 >We'll be creating learning objectives based on Bloom's taxonomy. Bloom’s taxonomy provides a systematic classification of the learning and thinking process.
-  It classifies knowledge into 6 levels that increase in complexity: remember, understand, apply, analyze, evaluate, create. Refer to the table below for the overview of each knowledge level.
+  <h6>We'll be creating learning objectives based on Bloom's taxonomy. Bloom’s taxonomy provides a systematic
+    classification of the learning and thinking process.
+    It classifies knowledge into 6 levels that increase in complexity: remember, understand, apply, analyze, evaluate,
+    create. Refer to the table below for the overview of each knowledge level.
   </h6>
   <%= image_tag("bloomlevels.png", class: 'taxonomy_img') %>
 
@@ -10,8 +12,8 @@
   <%= form_for :bloom_taxonomy_verb, url: new_bloom_taxonomy_verb_path, method: :get do |f| %>
 
     <div class="field form-group">
-      <%= f.label :bloom_taxonomy_level_id %><br />
-      <%= f.select :bloom_taxonomy_level_id, (@bloom_taxonomy_levels || []).map { |objective| [ objective.level, objective.id] }, {}, { class: ' form-control' } %>
+      <%= f.label :bloom_taxonomy_level_id %><br/>
+      <%= f.select :bloom_taxonomy_level_id, (@bloom_taxonomy_levels || []).map { |objective| [objective.level, objective.id] }, {}, { class: ' form-control' } %>
     </div>
 
     <%= f.hidden_field :course_id, value: @course_id %>

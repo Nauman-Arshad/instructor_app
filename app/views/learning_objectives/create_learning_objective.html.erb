@@ -13,9 +13,9 @@
   <%= form_for :learning_objective, url: learning_objectives_path, method: :post do |f| %>
     <div class="field form-group flex">
 
-      <%= f.text_field :Your_chosen_verb, value: @bloom_taxonomy_verb_name, class: 'form-control verb', required: true, readonly: true %>
+      <%= f.text_field :chosen_verb, value: @bloom_taxonomy_verb_name, class: 'form-control verb', required: true, readonly: true %>
       <%= f.text_field :description, autofocus: true, placeholder: "write learning objective...", class: 'form-control description', required: true %>
-      <%= f.label :Your_chosen_verb, class: 'verb' %>
+      <%= f.label :chosen_verb, class: 'verb' %>
       <%= f.label :description, class: 'description' %>
       <%= f.label :category %>
       <%= f.select :category, options_for_select(LearningObjective.categories.keys.map { |key| [key.titlecase, key] }), {}, { class: "form-control" } %>
@@ -27,7 +27,7 @@
       <div class="flex">
         <% @topics&.each do |topic| %>
           <div class="field">
-            <%= f.check_box "topic_#{topic.id}" %>
+            <%= check_box_tag 'topic[]', topic.id %>
             <%= f.label topic.description %>
             <br/>
           </div>
@@ -40,7 +40,8 @@
     <%= f.hidden_field :bloom_taxonomy_verb_id, value: @bloom_taxonomy_verb_id %>
 
     <div class="actions">
-      <%= f.submit "Next", class: 'btn btn-primary mb-2' %>
+      <%= link_to "Back", :back, class: 'btn btn-outline-dark mb-2' %>
+      <%= f.submit "Create", class: 'btn btn-primary mb-2' %>
     </div>
   <% end %>
 </div>

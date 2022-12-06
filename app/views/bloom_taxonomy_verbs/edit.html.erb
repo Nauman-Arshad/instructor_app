@@ -1,22 +1,29 @@
 <%= stylesheet_link_tag "taxonomy" %>
 <div class='container-fluid'>
   <h3 class="header">Edit your Learning Objective!</h3>
-  <h6 >We'll be creating learning objectives based on Bloom's taxonomy. Bloom’s taxonomy provides a systematic classification of the learning and thinking process.
-    It classifies knowledge into 6 levels that increase in complexity: remember, understand, apply, analyze, evaluate, create. Refer to the table below for the overview of each knowledge level.
+  <h6>We'll be creating learning objectives based on Bloom's taxonomy. Bloom’s taxonomy provides a systematic
+    classification of the learning and thinking process.
+    It classifies knowledge into 6 levels that increase in complexity: remember, understand, apply, analyze, evaluate,
+    create. Refer to the table below for the overview of each knowledge level.
   </h6>
   <%= image_tag("bloomlevels.png", class: 'taxonomy_img') %>
-
-  <h5>Now let's edit your Bloom's Taxonomy Level</h5>
-  <%= form_for :bloom_taxonomy_verb, url: new_bloom_taxonomy_verb_path, method: :get do |f| %>
-
+  <%= form_for :bloom_taxonomy_verb, url: :bloom_taxonomy_verb, method: :patch do |f| %>
     <div class="field form-group">
-      <%= f.label :bloom_taxonomy_level_id %><br />
-      <%= f.select :bloom_taxonomy_level_id, ["Remember"], {}, { class: ' form-control' } %>
+      <%= f.label :bloom_taxonomy_verb_id %><br/>
+      <input name="bloom_taxonomy_verb[bloom_taxonomy_verb_id]" type="text" list="bloom_taxonomy_verb_list_id" class='form-control' autocomplete="off">
+      <datalist id="bloom_taxonomy_verb_list_id">
+        <% @bloom_taxonomy_verbs.each do |verb| %>
+          <option><%= verb.name %></option>
+        <% end %>
+      </datalist>
+      </input>
     </div>
 
     <%= f.hidden_field :course_id, value: @course_id %>
+    <%= f.hidden_field :bloom_taxonomy_level_id, value: @bloom_taxonomy_level_id %>
 
     <div class="actions">
+      <%= link_to "Back", :back, class: 'btn btn-outline-dark mb-2' %>
       <%= f.submit "Next", class: 'btn btn-primary mb-2' %>
     </div>
   <% end %>

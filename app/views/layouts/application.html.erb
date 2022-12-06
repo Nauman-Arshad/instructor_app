@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Instructor Portal</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Instructor Portal</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'custom', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'custom', 'data-turbolinks-track': 'reload' %>
+</head>
 
-  <body>
-    <% if session[:user].present? %>
-      <nav class="navbar navbar-light bg-light">
-        <%= link_to 'Courses', courses_path, class: "navbar-brand mb-0 h1" %>
-        <%= link_to session[:user]['name'], '#', class: "navbar-brand mb-0 mr-sm-2 h1 ml-auto" %>
-        <%= link_to 'Logout', logout_users_path, class: "nav-link mb-0 mr-sm-2" %>
-      </nav><br>
-    <% end %>
-    <% if notice.present? %>
-      <p class="alert alert-danger"><%= notice %></p>
-    <% end %>
-    <% if flash[:success].present? %>
-      <p class="alert alert-success"><%= flash[:success] %></p>
-    <% end %>
-    <div class='container-fluid'>
-      <%= yield %>
-    </div>
-  </body>
+<body>
+<% if session[:user].present? %>
+  <nav class="navbar navbar-light bg-light">
+    <%= link_to 'Courses', courses_path, class: "navbar-brand mb-0 h1" %>
+    <%= link_to session[:user]['name'], '#', class: "navbar-brand mb-0 mr-sm-2 h1 ml-auto" %>
+    <%= link_to 'Logout', logout_users_path, class: "nav-link mb-0 mr-sm-2" %>
+  </nav>
+  <br>
+<% end %>
+<% if notice.present? %>
+  <p class="alert alert-danger"><%= notice %></p>
+<% end %>
+<% if flash[:success].present? %>
+  <p class="alert alert-success"><%= flash[:success] %></p>
+<% end %>
+<div class='container-fluid'>
+  <%= yield %>
+</div>
+</body>
 </html>

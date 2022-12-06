@@ -25,7 +25,7 @@
     <%= f.label 'Map Learning Objectives' %><br/>
     <% @learning_objectives&.each do |learning_objective| %>
       <div class="field">
-        <%= f.check_box "obj_#{learning_objective.id}" %>
+        <%= check_box_tag 'LO[]', learning_objective.key %>
         <%= f.label learning_objective.description %>
         <br/>
       </div>

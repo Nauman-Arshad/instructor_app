@@ -4,7 +4,9 @@ class LearningObjective < ApplicationRecord
   validates :course_id, presence: true
   validates :bloom_taxonomy_level_id, presence: true
   validates :bloom_taxonomy_verb_id, presence: true
-  before_save :validate_objective, :make_unique_key
+  validate :premium_category
+  # before_save :validate_objective
+  before_create :make_unique_key
   has_many :learning_objectives_topics
   has_many :topics, through: :learning_objectives_topics
   belongs_to :bloom_taxonomy_level
@@ -20,9 +22,9 @@ class LearningObjective < ApplicationRecord
   # Temporary One because JS has to be added on BLOOM_TAXONOMY LEVEL CLICK
   BLOOM_TAXONOMY_VERB = { '1': [[1, 'Remember_1'], [2, 'Remember_2']], '2': [[3, 'Understand_1'], [4, 'Understand_2']] }.freeze
 
-  VERIFICATION_KEYWORDS = ['and', 'or', 'understand', 'comprehend', 'know'].freeze
+  VERIFICATION_KEYWORDS = %w[and or understand comprehend know].freeze
 
-  def validate_objective
+  def premium_category
     error = false
     VERIFICATION_KEYWORDS.each do |keyword|
       if self.description.downcase.split.include?(keyword)
@@ -36,6 +38,21 @@ class LearningObjective < ApplicationRecord
     true
   end
 
+    # def validate_objective
+  #   binding.pry
+  #   error = false
+  #   VERIFICATION_KEYWORDS.each do |keyword|
+  #     if self.description.downcase.split.include?(keyword)
+  #       error = true
+  #       errors.add(:base, "description cannot contain #{keyword.upcase()}")
+  #     end
+  #   end
+  #   if error
+  #     throw :abort
+  #   end
+  #   true
+  # end
+
   def make_unique_key
     if LearningObjective.last.present?
       x = LearningObjective.last.id
@@ -44,11 +61,5 @@ class LearningObjective < ApplicationRecord
     end
     x = "LO" + "#{x + 1}"
     self.key = x
-  end
-
-  private
-
-  ransacker :numero do
-    Arel.sql("to_char(\"#{table_name}\".\"numero\", '99999')")
   end
 end
