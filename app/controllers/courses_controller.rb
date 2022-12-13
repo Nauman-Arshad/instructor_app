@@ -28,10 +28,10 @@ class CoursesController < ApplicationController
 
   def show
     @course = Course.find(params[:id])
-    @Objective = LearningObjective.all
+    # @Objective = LearningObjective.where(course_id: params[:id])
     @topics = @course.topics
     @blooms = BloomTaxonomyLevel.all
-    @learning_objectives = LearningObjective.all
+    @learning_objectives = LearningObjective.where(course_id: params[:id])
   end
 
   def course_params

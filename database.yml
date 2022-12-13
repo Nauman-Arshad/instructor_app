@@ -23,13 +23,15 @@ default: &default
 
 development:
   <<: *default
-  database: myapp_development
+  database: instructor_portal_development
+  username: admin
+  password: <%= ENV['123'] %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user that initialized the database.
-  #username: myapp
+  #username: instructor_portal
 
   # The password associated with the postgres role (username).
   #password:
@@ -57,7 +59,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: myapp_test
+  database: instructor_portal_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -80,6 +82,7 @@ test:
 #
 production:
   <<: *default
-  database: myapp_production
-  username: myapp
-  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
+  database: instructor_portal_production
+  username: instructor_portal
+  password: <%= ENV['INSTRUCTOR_PORTAL_DATABASE_PASSWORD'] %>
+

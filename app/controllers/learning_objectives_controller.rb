@@ -25,10 +25,14 @@ class LearningObjectivesController < ApplicationController
     end
     learning_objective = LearningObjective.new(new_params)
     if course.present? && learning_objective.save
-      params[:topic].each do |d|
+      # binding.pry
+      params[:topic]&.each do |d|
         topic = Topic.find_by_id(d)
-        @map_topic = topic[:map_topics] << learning_objective.key
-        topic.update(map_topics: @map_topic)
+        if topic["map_topics"].nil?
+          topic["map_topics"] = learning_objective.key
+        end
+        @map_topic = topic["map_topics"] << learning_objective.key
+        topic.update("map_topics" => @map_topic)
       end
       topic_ids.each do |topic_id|
         LearningObjectiveTopic.create(topic_id: topic_id, learning_objective_id: learning_objective.id)
@@ -37,7 +41,7 @@ class LearningObjectivesController < ApplicationController
       redirect_to course_path(course.id)
     else
       flash[:notice] = learning_objective.errors.full_messages.join("; ")
-      render :create_learning_objective
+      redirect_to course_path(course.id)
     end
   end
 
@@ -59,10 +63,24 @@ class LearningObjectivesController < ApplicationController
     @learning_objective = LearningObjective.find(params[:id])
     course = Course.find(@learning_objective.course_id)
     if @learning_objective.update(update_params)
+      if params[:topic].nil?
+        Topic.all.map do |topic|
+          if topic.map_topics&.include?(@learning_objective.key)
+            topic.map_topics.delete(@learning_objective.key)
+            if topic.map_topics.empty?
+              topic.map_topics == []
+            end
+            topic.save
+          end
+        end
+      end
       params[:topic]&.each do |d|
         topic = Topic.find_by_id(d)
-        @map_topic = topic[:map_topics] << @learning_objective.key
-        topic.update(map_topics: @map_topic)
+        if topic["map_topics"].nil?
+          topic["map_topics"] = @learning_objective.key
+        end
+        @map_topic = topic["map_topics"] << @learning_objective.key
+        topic.update("map_topics" => @map_topic.uniq)
       end
       topic_ids.each do |topic_id|
         LearningObjectiveTopic.create(topic_id: topic_id, learning_objective_id: @learning_objective.id)
@@ -71,7 +89,7 @@ class LearningObjectivesController < ApplicationController
       redirect_to course
     else
       flash[:notice] = @learning_objective.errors.full_messages.join("; ")
-      render :create_learning_objective
+      redirect_to course
     end
   end
 

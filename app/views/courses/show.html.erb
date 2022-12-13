@@ -18,10 +18,10 @@
       <% @topics.each do |topic| %>
         <tr>
           <td><%= topic.description %></td>
-          <% unless topic.map_topics.nil? %>
-            <td><%= topic.map_topics&.join(', ') %></td>
-          <% else topic.map_topics == [] %>
+          <% if topic.map_topics == [] || topic.map_topics.nil? %>
             <td style="color: red">no mapping for this topic</td>
+          <% else %>
+            <td><%= topic.map_topics&.join(', ') %></td>
           <% end %>
           <td style="text-align: right;">
             <%= link_to 'Edit', edit_topic_path(topic), class: 'btn btn-success' %>
@@ -50,9 +50,10 @@
       </tr>
       </thead>
       <tbody>
-      <% @learning_objectives.each do |learning_objective| %>
+      <% @learning_objectives.each_with_index do |learning_objective, index| %>
+        <% indexplus = index + 1 %>
         <tr>
-          <td><%= learning_objective.key %></td>
+          <td>LO<%= indexplus %></td>
           <td><%= learning_objective.chosen_verb %> <%= learning_objective.description %></td>
           <td><%= learning_objective.bloom_taxonomy_level.level %></td>
           <td><%= learning_objective.category %></td>
@@ -69,7 +70,7 @@
 <br/>
 <div class='container-fluid'>
   <h2>Mappings</h2>
-  <% unless @Objective.any? == false %>
+  <% unless @learning_objectives.any? == false %>
     <table class="table table-striped mt-2">
       <thead>
       <tr>
@@ -80,12 +81,12 @@
       </thead>
       <tbody>
       <tr>
-        <td><%= @Objective.remember.map { |t| "#{t.key}" }.join(", ") %></td>
-        <td><%= @Objective.understand.map { |t| "#{t.key}" }.join(", ") %></td>
-        <td><%= @Objective.apply.map { |t| "#{t.key}" }.join(", ") %></td>
-        <td><%= @Objective.analyze.map { |t| "#{t.key}" }.join(", ") %></td>
-        <td><%= @Objective.evaluate.map { |t| "#{t.key}" }.join(", ") %></td>
-        <td><%= @Objective.creat.map { |t| "#{t.key}" }.join(", ") %></td>
+        <td><%= @learning_objectives.remember.map { |t| "#{t.key}" }.join(", ") %></td>
+        <td><%= @learning_objectives.understand.map { |t| "#{t.key}" }.join(", ") %></td>
+        <td><%= @learning_objectives.apply.map { |t| "#{t.key}" }.join(", ") %></td>
+        <td><%= @learning_objectives.analyze.map { |t| "#{t.key}" }.join(", ") %></td>
+        <td><%= @learning_objectives.evaluate.map { |t| "#{t.key}" }.join(", ") %></td>
+        <td><%= @learning_objectives.creat.map { |t| "#{t.key}" }.join(", ") %></td>
       </tr>
       </tbody>
     </table>

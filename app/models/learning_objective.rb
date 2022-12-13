@@ -5,8 +5,8 @@ class LearningObjective < ApplicationRecord
   validates :bloom_taxonomy_level_id, presence: true
   validates :bloom_taxonomy_verb_id, presence: true
   validate :premium_category
-  # before_save :validate_objective
   before_create :make_unique_key
+  after_destroy :update_topic
   has_many :learning_objectives_topics
   has_many :topics, through: :learning_objectives_topics
   belongs_to :bloom_taxonomy_level
@@ -29,7 +29,7 @@ class LearningObjective < ApplicationRecord
     VERIFICATION_KEYWORDS.each do |keyword|
       if self.description.downcase.split.include?(keyword)
         error = true
-        errors.add(:base, "description cannot contain #{keyword.upcase()}")
+        errors.add(:base, "Error description cannot contain (#{keyword.upcase()}) LO is not saved!")
       end
     end
     if error
@@ -37,21 +37,6 @@ class LearningObjective < ApplicationRecord
     end
     true
   end
-
-    # def validate_objective
-  #   binding.pry
-  #   error = false
-  #   VERIFICATION_KEYWORDS.each do |keyword|
-  #     if self.description.downcase.split.include?(keyword)
-  #       error = true
-  #       errors.add(:base, "description cannot contain #{keyword.upcase()}")
-  #     end
-  #   end
-  #   if error
-  #     throw :abort
-  #   end
-  #   true
-  # end
 
   def make_unique_key
     if LearningObjective.last.present?
@@ -61,5 +46,17 @@ class LearningObjective < ApplicationRecord
     end
     x = "LO" + "#{x + 1}"
     self.key = x
+  end
+
+  def update_topic
+    Topic.all.map do |topic|
+      if topic.map_topics&.include?(self.key)
+        topic.map_topics.delete(self.key)
+        if topic.map_topics.empty?
+          topic.map_topics == []
+        end
+        topic.save
+      end
+    end
   end
 end
